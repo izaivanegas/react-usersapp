@@ -4,7 +4,7 @@ import  {UserRow} from "./UserRow";
 export const UsersList = ({users}) => {
 
 
-    console.log('--->' + users)
+    console.log('UsersList--->' + users)
 
     const handleUpdate = ()=> {
         alert('update')

@@ -12,7 +12,8 @@ export const usersReducer = (state = [], action) => {
 
                 }
             ]
-        default: state;
+        default:
+            return state;
 
     }
 

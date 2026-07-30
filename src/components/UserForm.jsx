@@ -33,10 +33,7 @@ export const UserForm = ({handlerAddUser}) => {
             alert("Todos los campos son obligatorios")
             return
         }
-            console.log("formulario:"+userForm);
-            console.log(""+userForm.username);
-            console.log(""+userForm.password);
-            console.log(""+userForm.password);
+
             handlerAddUser(userForm);
             setUserForm(initialUserForm);
         }

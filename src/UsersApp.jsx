@@ -16,16 +16,12 @@ const initialUsers =  [{
 
 export const UsersApp = () => {
 
-
     const [users, dispatch] = useReducer(usersReducer,initialUsers)
 
 
-
 const handlerAddUser = (user)=>{
-    console.log("Estamos en handlerAddUser");
-    console.log("Lo que recibimos:"+user);
     dispatch({
-        type:'addUser',
+        type:'AddUser',
         payload: user
     });
 
