@@ -1,21 +1,34 @@
 import {Header} from "./components/Header";
 import {UserForm} from "./components/UserForm";
 import {UsersList} from "./components/UsersList";
-import {useState} from "react";
+import {useReducer, useState} from "react";
+import {usersReducer} from "./reducers/usersReducer";
 
+
+const initialUsers =  [{
+    id:1,
+    username:'Jose',
+    password:'12345',
+    email:'izai.vanegas@gmail.com'
+},
+]
 
 
 export const UsersApp = () => {
 
-   const [usersList, setUsersList] = useState(initialUsers)
+
+    const [users, dispatch] = useReducer(usersReducer,initialUsers)
+
 
 
 const handlerAddUser = (user)=>{
+    console.log("Estamos en handlerAddUser");
+    console.log("Lo que recibimos:"+user);
+    dispatch({
+        type:'addUser',
+        payload: user
+    });
 
-    console.log(user);
-    setUsersList(
-        [...usersList, user]
-    )
 
 }
 
@@ -32,7 +45,7 @@ const handlerAddUser = (user)=>{
                         />
                     </div>
                     <div className="col">
-                        <UsersList users={usersList}
+                        <UsersList users={users}
 
                         />
                     </div>

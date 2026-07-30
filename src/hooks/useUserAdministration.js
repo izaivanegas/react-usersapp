@@ -1,4 +1,4 @@
-import {useReducer} from "react";
+import {useEffect, useReducer} from "react";
 import {usersReducer} from '../reducers/usersReducer';
 
 
@@ -14,6 +14,17 @@ const initialUsers =  [{
 export const useUserAdministration = () => {
 
     const [users, dispatch] = useReducer(usersReducer,initialUsers)
+
+
+
+    /*
+    Necesitamos actualizar siempre que haya un cambio
+     */
+    useEffect(()=>{
+
+
+    }, [users]);
+
 
 
     /**

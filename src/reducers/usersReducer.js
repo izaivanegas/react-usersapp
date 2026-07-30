@@ -1,13 +1,10 @@
-import {addUser, deleteUser, updateUser} from '../actions/UsersActions';
+import {addUser, deleteUser, updateUser} from './usersActions';
 
 
 export const usersReducer = (state = [], action) => {
 
-
     switch(action.type){
         case addUser:
-
-
             return [...state,
                 {
                     ...action.payload,
