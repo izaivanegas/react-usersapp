@@ -3,7 +3,7 @@ import {UserForm} from "./components/UserForm";
 import {UsersList} from "./components/UsersList";
 import {useReducer, useState} from "react";
 import {usersReducer} from "./reducers/usersReducer";
-
+import {addUser, deleteUser, updateUser} from './reducers/usersActions';
 
 const initialUsers =  [{
     id:1,
@@ -21,9 +21,19 @@ export const UsersApp = () => {
 
 const handlerAddUser = (user)=>{
     dispatch({
-        type:'AddUser',
+        type:addUser,
         payload: user
     });
+
+}
+
+const handlerRemoveUser = (id)=>{
+    console.log("REMOVE USER REMOVE USER" + id);
+
+    dispatch({
+        type:deleteUser,
+        payload:id
+    })
 
 
 }
@@ -42,7 +52,7 @@ const handlerAddUser = (user)=>{
                     </div>
                     <div className="col">
                         <UsersList users={users}
-
+                                   handlerRemoveUser={handlerRemoveUser}
                         />
                     </div>
                 </div>

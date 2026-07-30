@@ -1,10 +1,7 @@
 
 import  {UserRow} from "./UserRow";
 
-export const UsersList = ({users}) => {
-
-
-    console.log('UsersList--->' + users)
+export const UsersList = ({users, handlerRemoveUser}) => {
 
     const handleUpdate = ()=> {
         alert('update')
@@ -30,7 +27,7 @@ export const UsersList = ({users}) => {
                 <tbody>
                 {
                     users.map(({id, username, email}) => (
-                        <UserRow  key={id} id={id} username={username} email={email}  />
+                        <UserRow  key={id} id={id} username={username} email={email} handlerRemoveUser={(id)=>handlerRemoveUser(id)}   />
                     ))
 
                 }
