@@ -1,6 +1,6 @@
 
 
-export const UserRow = ({id, username, email, handlerRemoveUser}) =>{
+export const UserRow = ({id, username, email,password, handlerRemoveUser, handleEditUser}) =>{
 
     return (
         <>
@@ -11,7 +11,14 @@ export const UserRow = ({id, username, email, handlerRemoveUser}) =>{
                 <td>
                     <button type="button" className="btn btn-warning"
 
-                            onClick={()=> handleUpdate()}
+                            onClick={()=> handleEditUser(
+                                {
+                                    id: id,
+                                    username: username,
+                                    email: email,
+                                    password: password,
+                                }
+                            )}
                     >Update</button>
                 </td>
                 <td>

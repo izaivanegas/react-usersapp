@@ -1,18 +1,18 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
-const initialUserForm = {
-    username: '',
-    password: '',
-    email: '',
-}
-
-export const UserForm = ({handlerAddUser}) => {
+export const UserForm = ({handlerAddUser, initialUserForm, userSelected}) => {
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
-    const {username, password, email} = userForm;
+    const {id, username, password, email} = userForm;
 
+
+    useEffect(() => {
+        setUserForm({
+            ...userSelected,
+        })
+    }, [userSelected])
 
     const onInputChange = ({target}) => {
         const {name, value} = target;
@@ -26,17 +26,17 @@ export const UserForm = ({handlerAddUser}) => {
     }
 
 
-        const onSubmit = (event) => {
+    const onSubmit = (event) => {
         //Esto se debe de poner para no actualizar la pagina y no se pierda la inforamcion
         event.preventDefault();
-        if(!username || !password || !email){
+        if (!username || !password || !email) {
             alert("Todos los campos son obligatorios")
             return
         }
 
-            handlerAddUser(userForm);
-            setUserForm(initialUserForm);
-        }
+        handlerAddUser(userForm);
+        setUserForm(initialUserForm);
+    }
 
 
     return (
@@ -45,11 +45,23 @@ export const UserForm = ({handlerAddUser}) => {
             <form onSubmit={onSubmit}>
                 <input type="text" className="form-control my-3" placeholder="username" name="username"
                        onChange={onInputChange} value={username}/>
-                <input type="password" className="form-control my-3" placeholder="password" name="password"
-                       onChange={onInputChange} value={password}/>
+
+                {id > 0 || <input type="password" className="form-control my-3" placeholder="password" name="password"
+                                  onChange={onInputChange} value={password}/>  }
+
                 <input type="email" className="form-control my-3" placeholder="email" name="email"
                        onChange={onInputChange} value={email}/>
-                <button type="submit" className="btn btn-primary">Agregar usuario</button>
+
+                <input type="hidden"
+                       name="id"
+                       value={id}
+                       className="form-control my-3" />
+
+                <button type="submit" className="btn btn-primary">
+
+                    {id > 0 ? 'Editar usuario' : 'Agregar Usuario'}
+
+                </button>
             </form>
 
         </>

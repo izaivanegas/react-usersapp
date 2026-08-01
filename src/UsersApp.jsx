@@ -1,59 +1,44 @@
 import {Header} from "./components/Header";
 import {UserForm} from "./components/UserForm";
 import {UsersList} from "./components/UsersList";
-import {useReducer, useState} from "react";
-import {usersReducer} from "./reducers/usersReducer";
-import {addUser, deleteUser, updateUser} from './reducers/usersActions';
-
-const initialUsers =  [{
-    id:1,
-    username:'Jose',
-    password:'12345',
-    email:'izai.vanegas@gmail.com'
-},
-]
-
+import {useUsers} from './hooks/useUsers.js'
 
 export const UsersApp = () => {
 
-    const [users, dispatch] = useReducer(usersReducer,initialUsers)
-
-
-const handlerAddUser = (user)=>{
-    dispatch({
-        type:addUser,
-        payload: user
-    });
-
-}
-
-const handlerRemoveUser = (id)=>{
-    console.log("REMOVE USER REMOVE USER" + id);
-
-    dispatch({
-        type:deleteUser,
-        payload:id
-    })
-
-
-}
+    const {
+        users,
+        userSelected,
+        initialUserForm,
+        handlerAddUser,
+        handlerRemoveUser,
+        handleEditUser
+    } = useUsers();
 
     return (
         <>
 
             <div className="container my-4">
-                <Header />
-                <h2>Users App</h2>
+                <Header/>
                 <div className="row">
                     <div className="col">
                         <UserForm
                             handlerAddUser={handlerAddUser}
+                            initialUserForm={initialUserForm}
+                            userSelected={userSelected}
                         />
                     </div>
                     <div className="col">
-                        <UsersList users={users}
-                                   handlerRemoveUser={handlerRemoveUser}
-                        />
+                        {users.length === 0 ?
+                            <div className="alert alert-warning my-3">
+                                No hay usuarios
+                            </div>
+                            :
+                            <UsersList users={users}
+                                       handlerRemoveUser={handlerRemoveUser}
+                                       handleEditUser={handleEditUser}
+                            />
+                        }
+
                     </div>
                 </div>
             </div>
