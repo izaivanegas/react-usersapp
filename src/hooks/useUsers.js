@@ -25,6 +25,7 @@ export const useUsers = () => {
 
     const [users, dispatch] = useReducer(usersReducer,initialUsers)
     const [userSelected, setUserSelected] = useState(initialUserForm)
+    const [visibleForm, setVisibleForm] = useState(false)
 
     const handlerAddUser = (user)=>{
         if(user !== null && user.id !== undefined ){
@@ -57,7 +58,7 @@ export const useUsers = () => {
         }else{
             console.log("problema con el procesamiento de usuario")
         }
-
+        handleCloseForm()
     }
 
     const handlerRemoveUser = (id)=>{
@@ -96,29 +97,30 @@ export const useUsers = () => {
     const handleEditUser = (user)=>{
         console.log("REMOVE USER REMOVE USER" + user.id)
         console.log("username: "+ user.username)
-
+        setVisibleForm(true)
         setUserSelected({
             ...user,
 
         })
-        /*if(user !== null){
-            dispatch({
-                type:updateUser,
-                payload:user
-            })
-        }else{
-            alert("Problem editing user");
-        }
-    */
     }
+    const handleOpenForm = () =>{
+        setVisibleForm(true)
+    }
+    const handleCloseForm = () =>{
+        setVisibleForm(false)
+        setUserSelected(initialUserForm)
+    }
+
     return {
         users,
         userSelected,
         initialUserForm,
+        visibleForm,
         handlerAddUser,
         handlerRemoveUser,
-        handleEditUser
+        handleEditUser,
+        handleOpenForm,
+        handleCloseForm
     }
-
 
 }
