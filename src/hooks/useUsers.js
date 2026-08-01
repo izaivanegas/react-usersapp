@@ -2,6 +2,7 @@ import {use, useReducer, useState} from "react";
 import {usersReducer} from "../reducers/usersReducer.js";
 import {addUser, deleteUser, updateUser} from '../reducers/usersActions';
 
+import Swal from "sweetalert2";
 
 const initialUsers =  [{
     id: new Date().getTime(),
@@ -33,6 +34,12 @@ export const useUsers = () => {
                     type:addUser,
                     payload: user
                 });
+
+                Swal.fire(
+                    'Agregar usuario',
+                    'Usuario creado con exito',
+                    'sucess'
+                )
             }else{
                 //actualizacion por que es dif de cero
                 console.log("se actualiza")
@@ -41,6 +48,11 @@ export const useUsers = () => {
                     type:updateUser,
                     payload:user
                 })
+                Swal.fire(
+                    'Actualizacion de informacion',
+                    'Usuario actualizado con exito',
+                    'sucess'
+                )
             }
         }else{
             console.log("problema con el procesamiento de usuario")
@@ -51,10 +63,32 @@ export const useUsers = () => {
     const handlerRemoveUser = (id)=>{
         console.log("REMOVE USER REMOVE USER" + id);
 
-        dispatch({
-            type:deleteUser,
-            payload:id
-        })
+
+        Swal.fire({
+            title: "Estas seguro de eliminar?",
+            text: "Una vez aliminado no hay forma de revertir!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Eliminar"
+        }).then((result) => {
+            if (result.isConfirmed){
+                dispatch({
+                    type:deleteUser,
+                    payload:id
+                })
+                Swal.fire({
+                    title: "Eliminar cuenta!",
+                    text: "Usuario eliminado con exito.",
+                    icon: "success"
+                });
+            }
+        });
+
+
+
+
 
 
     }

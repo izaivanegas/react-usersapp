@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-
+import Swal from "sweetalert2";
 
 export const UserForm = ({handlerAddUser, initialUserForm, userSelected}) => {
 
@@ -30,7 +30,11 @@ export const UserForm = ({handlerAddUser, initialUserForm, userSelected}) => {
         //Esto se debe de poner para no actualizar la pagina y no se pierda la inforamcion
         event.preventDefault();
         if (!username || !password || !email) {
-            alert("Todos los campos son obligatorios")
+            Swal.fire({
+                title: "Error de validación",
+                text: "Todos los campos son obligatorios",
+                icon: "error"
+            });
             return
         }
 
