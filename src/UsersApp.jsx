@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import {loginAction} from "./auth/reducers/LoginActions.js"
 import {UsersPage} from "./pages/UsersPage.jsx";
 
-const initialLoginUser = {
+const initialLoginUser = JSON.parse(sessionStorage.getItem('user'))|| {
     isAuth: false,
     user: {
         username: "",
@@ -32,6 +32,10 @@ export const UsersApp = () => {
                 payload: user
             })
             console.log(login)
+            sessionStorage.setItem('user', JSON.stringify({
+                isAuth: true,
+                user:user
+            }));
         }else{
             Swal.fire("warning", "Datos incorrectos", "error")
         }
