@@ -1,55 +1,46 @@
-import {Header} from "./components/Header";
-import {UserForm} from "./components/UserForm";
-import {UsersList} from "./components/UsersList";
-import {useUsers} from './hooks/useUsers.js'
-import {UserModalForm} from "./components/UserModalForm";
+import {LoginPage} from './auth/pages/LoginPage.jsx'
+import {useReducer} from "react";
+import {LoginReducer} from "./auth/reducers/LoginReducer.js";
+import Swal from "sweetalert2";
+import {loginAction} from "./auth/reducers/LoginActions.js"
+import {UsersPage} from "./pages/UsersPage.jsx";
+
+const initialLoginUser = {
+    isAuth: false,
+    user: {
+        username: "",
+        password: "",
+    }
+}
 
 export const UsersApp = () => {
 
-    const {
-        users,
-        userSelected,
-        initialUserForm,
-        visibleForm,
-        handlerAddUser,
-        handlerRemoveUser,
-        handleEditUser,
-        handleCloseForm,
-        handleOpenForm
-    } = useUsers();
+    const [login, dispatch] = useReducer(LoginReducer, initialLoginUser)
+
+
+    /**
+     * Se usara para hacer la logica del login
+     * @param username
+     * @param password
+     */
+    const handleLogin = ({username, password})=>{
+        console.log("datos: "  + username +"pass:" +  password)
+        if(username === 'admin' && password === 'admin'){
+            const user = {username:'admin', password:'admin'};
+            dispatch({
+                type: loginAction,
+                payload: user
+            })
+            console.log(login)
+        }else{
+            Swal.fire("warning", "Datos incorrectos", "error")
+        }
+    }
 
     return (
         <>
-            {!visibleForm ||
-                <UserModalForm
-                    userSelected={userSelected}
-                    handlerAddUser={handlerAddUser}
-                    initialUserForm={initialUserForm}
-                    handleCloseForm={handleCloseForm}/>
-            }
-            <div className="container my-4">
-                <Header/>
-                <div className="row">
-                    <div className="col">
-                        {visibleForm ||
-                            <button
-                                className="btn btn-primary my-3"
-                                type="button"
-                                onClick={handleOpenForm}>
-                                Nuevo usuario
-                            </button>}
+            {login.isAuth ? <UsersPage /> : <LoginPage handleLogin={handleLogin}/> }
 
-                        {users.length === 0 ?
-                            <div className="alert alert-warning my-3">No hay usuarios</div>
-                            :
-                            <UsersList
-                                users={users}
-                                handlerRemoveUser={handlerRemoveUser}
-                                handleEditUser={handleEditUser}/>
-                        }
-                    </div>
-                </div>
-            </div>
         </>
     );
 
