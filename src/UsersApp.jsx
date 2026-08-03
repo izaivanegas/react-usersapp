@@ -2,50 +2,38 @@ import {LoginPage} from './auth/pages/LoginPage.jsx'
 import {useReducer} from "react";
 import {LoginReducer} from "./auth/reducers/LoginReducer.js";
 import Swal from "sweetalert2";
-import {loginAction} from "./auth/reducers/LoginActions.js"
+import {loginAction, logoutAction} from "./auth/reducers/LoginActions.js"
 import {UsersPage} from "./pages/UsersPage.jsx";
+import {Navbar} from "./layout/Navbar.jsx";
+import {useLogin} from "./auth/hooks/useLogin.js";
+import {Route, Routes,Navigate} from "react-router-dom";
+import {UserRoutes} from "./routes/UserRoutes.jsx";
 
-const initialLoginUser = JSON.parse(sessionStorage.getItem('user'))|| {
-    isAuth: false,
-    user: {
-        username: "",
-        password: "",
-    }
-}
 
 export const UsersApp = () => {
 
-    const [login, dispatch] = useReducer(LoginReducer, initialLoginUser)
+    const {
+        login,
+        handleLogout,
+        handleLogin
+    } = useLogin();
 
 
-    /**
-     * Se usara para hacer la logica del login
-     * @param username
-     * @param password
-     */
-    const handleLogin = ({username, password})=>{
-        console.log("datos: "  + username +"pass:" +  password)
-        if(username === 'admin' && password === 'admin'){
-            const user = {username:'admin', password:'admin'};
-            dispatch({
-                type: loginAction,
-                payload: user
-            })
-            console.log(login)
-            sessionStorage.setItem('user', JSON.stringify({
-                isAuth: true,
-                user:user
-            }));
-        }else{
-            Swal.fire("warning", "Datos incorrectos", "error")
-        }
-    }
 
     return (
-        <>
-            {login.isAuth ? <UsersPage /> : <LoginPage handleLogin={handleLogin}/> }
+        <Routes>
+            {login.isAuth ? (
+                <Route path="/*"  element={<UserRoutes login={login} handleLogout={handleLogout} /> } />
+              ) :
+                <>
+                    <Route path="login" element={<LoginPage handleLogin={handleLogin} />} />
+                    <Route path="/*" element={<Navigate to="/login" />} />
 
-        </>
+                    </>
+
+            }
+
+        </Routes>
     );
 
 }

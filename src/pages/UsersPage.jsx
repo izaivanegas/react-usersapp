@@ -1,6 +1,6 @@
 import {useUsers} from "../hooks/useUsers.js";
 import {UserModalForm} from "../components/UserModalForm.jsx";
-import {Header} from "../components/Header.jsx";
+
 import {UsersList} from "../components/UsersList.jsx";
 
 export const UsersPage = ()=>{
@@ -26,7 +26,6 @@ export const UsersPage = ()=>{
                     handleCloseForm={handleCloseForm}/>
             }
             <div className="container my-4">
-                <Header/>
                 <div className="row">
                     <div className="col">
                         {visibleForm ||
