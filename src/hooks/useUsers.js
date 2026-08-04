@@ -1,7 +1,7 @@
 import {use, useReducer, useState} from "react";
 import {usersReducer} from "../reducers/usersReducer.js";
 import {addUser, deleteUser, updateUser} from '../reducers/usersActions';
-
+import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 const initialUsers =  [{
@@ -23,6 +23,8 @@ const initialUserForm = {
 
 export const useUsers = () => {
 
+    const navigate = useNavigate();
+
     const [users, dispatch] = useReducer(usersReducer,initialUsers)
     const [userSelected, setUserSelected] = useState(initialUserForm)
     const [visibleForm, setVisibleForm] = useState(false)
@@ -39,8 +41,9 @@ export const useUsers = () => {
                 Swal.fire(
                     'Agregar usuario',
                     'Usuario creado con exito',
-                    'sucess'
+                    'success'
                 )
+                navigate('/users')
             }else{
                 //actualizacion por que es dif de cero
                 console.log("se actualiza")
@@ -52,8 +55,9 @@ export const useUsers = () => {
                 Swal.fire(
                     'Actualizacion de informacion',
                     'Usuario actualizado con exito',
-                    'sucess'
+                    'success'
                 )
+                navigate('/users')
             }
         }else{
             console.log("problema con el procesamiento de usuario")
@@ -84,6 +88,7 @@ export const useUsers = () => {
                     text: "Usuario eliminado con exito.",
                     icon: "success"
                 });
+                navigate('/users')
             }
         });
 

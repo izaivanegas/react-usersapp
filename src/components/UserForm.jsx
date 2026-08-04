@@ -9,6 +9,7 @@ export const UserForm = ({handlerAddUser, initialUserForm, userSelected, handleC
 
 
     useEffect(() => {
+        console.log("userSelected active", userSelected);
         setUserForm({
             ...userSelected,
         })
@@ -37,7 +38,6 @@ export const UserForm = ({handlerAddUser, initialUserForm, userSelected, handleC
             });
             return
         }
-
         handlerAddUser(userForm);
         setUserForm(initialUserForm);
     }
@@ -71,10 +71,13 @@ export const UserForm = ({handlerAddUser, initialUserForm, userSelected, handleC
                     {id > 0 ? 'Editar usuario' : 'Agregar Usuario'}
 
                 </button>
-                <button type="button" className="btn btn-primary mx-3"
-                onClick={()=>onCloseForm()}
+
+                { !handleCloseForm || <button type="button" className="btn btn-primary mx-3"
+                                          onClick={()=>onCloseForm()}
 
                 >Cerrar</button>
+                }
+
             </form>
 
         </>

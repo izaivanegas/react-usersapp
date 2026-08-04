@@ -3,18 +3,18 @@ import {UserModalForm} from "../components/UserModalForm.jsx";
 
 import {UsersList} from "../components/UsersList.jsx";
 
-export const UsersPage = ()=>{
-    const {
-        users,
-        userSelected,
-        initialUserForm,
-        visibleForm,
-        handlerAddUser,
-        handlerRemoveUser,
-        handleEditUser,
-        handleCloseForm,
-        handleOpenForm
-    } = useUsers();
+export const UsersPage = ({
+                              users,
+                              userSelected,
+                              initialUserForm,
+                              visibleForm,
+                              handlerAddUser,
+                              handlerRemoveUser,
+                              handleEditUser,
+                              handleCloseForm,
+                              handleOpenForm
+                          })=>{
+
 
     return (
         <>

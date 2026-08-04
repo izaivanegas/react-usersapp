@@ -18,6 +18,13 @@ export const Navbar = ({handleLogout, login}) => {
                             </li>
                         </ul>
                     </div>
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/users/register" >Registrar usuarios</NavLink>
+                            </li>
+                        </ul>
+                    </div>
                     <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                         <span className="nav-item nav-link text-primary mx-3">
                             { login.user?.username }
