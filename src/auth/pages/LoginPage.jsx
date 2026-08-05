@@ -1,12 +1,15 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Swal from "sweetalert2";
+import {LoginContext} from "../context/LoginContext.jsx";
 
 const initialLoginForm = {
     username:'',
     password:'',
 }
 
-export const LoginPage = ({handleLogin}) => {
+export const LoginPage = () => {
+
+    const {handleLogin} = useContext(LoginContext);
 
     const [loginForm, setLoginForm] = useState(initialLoginForm)
 

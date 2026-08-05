@@ -6,12 +6,15 @@ import './styles.css'
 
 import {UsersApp} from "./UsersApp.jsx";
 import {BrowserRouter} from "react-router-dom";
+import {LoginProvider} from "./auth/context/LoginProvider.jsx";
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
       <BrowserRouter>
-          <UsersApp />
+          <LoginProvider>
+              <UsersApp />
+          </LoginProvider>
       </BrowserRouter>
   </StrictMode>,
 )

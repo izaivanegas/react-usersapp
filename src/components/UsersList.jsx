@@ -1,7 +1,12 @@
 
 import  {UserRow} from "./UserRow";
+import {useContext} from "react";
+import {UserContext} from "../context/UserContext.jsx";
 
-export const UsersList = ({users, handlerRemoveUser, handleEditUser}) => {
+export const UsersList = () => {
+
+
+    const {users} = useContext(UserContext)
 
     const handleUpdate = ()=> {
         alert('update')
@@ -30,8 +35,7 @@ export const UsersList = ({users, handlerRemoveUser, handleEditUser}) => {
                     users.map(({id, username, email, password}) => (
                         <UserRow  key={id} id={id} username={username} email={email}
                                   password={password}
-                                  handlerRemoveUser={(id)=>handlerRemoveUser(id)}
-                                  handleEditUser = {handleEditUser}
+
                         />
                     ))
 

@@ -1,6 +1,9 @@
 import {Link, NavLink} from "react-router-dom";
+import {useContext} from "react";
+import {LoginContext} from "../auth/context/LoginContext.jsx";
 
-export const Navbar = ({handleLogout, login}) => {
+export const Navbar = () => {
+    const {handleLogout, login} = useContext(LoginContext);
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
