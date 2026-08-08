@@ -2,7 +2,7 @@ import {useUsers} from "../hooks/useUsers.js";
 import {UserModalForm} from "../components/UserModalForm.jsx";
 
 import {UsersList} from "../components/UsersList.jsx";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {UserContext} from "../context/UserContext.jsx";
 
 export const UsersPage = ()=>{
@@ -13,8 +13,15 @@ export const UsersPage = ()=>{
         visibleForm,
         handlerRemoveUser,
         handleEditUser,
-        handleOpenForm
+        handleOpenForm,
+        getUsers
     } = useContext(UserContext)
+
+    //para ejecutar la funcion getUsers
+    useEffect(()=>{
+        getUsers()
+    }, [])
+
 
 
     return (

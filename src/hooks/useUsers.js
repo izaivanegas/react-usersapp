@@ -1,8 +1,9 @@
 import {use, useReducer, useState} from "react";
 import {usersReducer} from "../reducers/usersReducer.js";
-import {addUser, deleteUser, updateUser} from '../reducers/usersActions';
+import {addUser, deleteUser, updateUser, loadingUsers} from '../reducers/usersActions';
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
+import {findAll} from "../service/userService.js";
 
 const initialUsers =  [{
     id: new Date().getTime(),
@@ -28,6 +29,21 @@ export const useUsers = () => {
     const [users, dispatch] = useReducer(usersReducer,initialUsers)
     const [userSelected, setUserSelected] = useState(initialUserForm)
     const [visibleForm, setVisibleForm] = useState(false)
+
+    /**
+     * Recuperamos los usuarios del backend usando axios
+     * @returns {Promise<void>}
+     */
+    const getUsers = async () =>{
+        const result = await findAll()
+        //console.log(result)
+        dispatch(
+            {
+                type:loadingUsers,
+                payload:result.data
+            }
+        )
+    }
 
     const handlerAddUser = (user)=>{
         if(user !== null && user.id !== undefined ){
@@ -125,7 +141,8 @@ export const useUsers = () => {
         handlerRemoveUser,
         handleEditUser,
         handleOpenForm,
-        handleCloseForm
+        handleCloseForm,
+        getUsers
     }
 
 }

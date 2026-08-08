@@ -1,4 +1,4 @@
-import {addUser, deleteUser, updateUser} from './usersActions';
+import {addUser, deleteUser, loadingUsers, updateUser} from './usersActions';
 
 
 export const usersReducer = (state = [], action) => {
@@ -26,6 +26,8 @@ export const usersReducer = (state = [], action) => {
                 }
                 return usuario
             })
+        case loadingUsers:
+            return action.payload
         default:
             return state;
 
