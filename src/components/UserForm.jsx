@@ -34,7 +34,8 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
     const onSubmit = (event) => {
         //Esto se debe de poner para no actualizar la pagina y no se pierda la inforamcion
         event.preventDefault();
-        if (!username || !password || !email) {
+
+        if (!username || ( id == 0 && !password ) || !email) {
             Swal.fire({
                 title: "Error de validación",
                 text: "Todos los campos son obligatorios",

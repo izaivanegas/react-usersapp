@@ -3,7 +3,7 @@ import {usersReducer} from "../reducers/usersReducer.js";
 import {addUser, deleteUser, updateUser, loadingUsers} from '../reducers/usersActions';
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
-import {findAll} from "../service/userService.js";
+import {findAll, remove, save, update} from "../service/userService.js";
 
 const initialUsers =  [{
     id: new Date().getTime(),
@@ -45,13 +45,18 @@ export const useUsers = () => {
         )
     }
 
-    const handlerAddUser = (user)=>{
+    const handlerAddUser = async (user)=>{
+        let respose;
         if(user !== null && user.id !== undefined ){
             if(user.id === 0 ){
-                console.log("se agrega")
+                console.log("handlerAddUser: se agrega un usuario....")
+
+                respose = await save(user);
+
+
                 dispatch({
                     type:addUser,
-                    payload: user
+                    payload: respose.data.data
                 });
 
                 Swal.fire(
@@ -62,11 +67,11 @@ export const useUsers = () => {
                 navigate('/users')
             }else{
                 //actualizacion por que es dif de cero
-                console.log("se actualiza")
-                console.log("se recibe id:" + user.id)
+                console.log("se realizara la actualizacion del usuaio id: "+user.id)
+                respose = await update(user)
                 dispatch({
                     type:updateUser,
-                    payload:user
+                    payload:respose.data.data
                 })
                 Swal.fire(
                     'Actualizacion de informacion',
@@ -95,6 +100,7 @@ export const useUsers = () => {
             confirmButtonText: "Eliminar"
         }).then((result) => {
             if (result.isConfirmed){
+                remove(id)
                 dispatch({
                     type:deleteUser,
                     payload:id
