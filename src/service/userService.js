@@ -29,13 +29,29 @@ export const findAll = async ()=>{
  * @returns {Promise<void>}
  */
 export const save =  async ({username, password, email})=>{
-
+    console.log("save.......")
     try{
-       return  await axios.post(BASE_URL+"/adduser",
+       const response =   await axios.post(BASE_URL+"/adduser",
             {username, password, email})
 
-    }catch (e){
-        console.error(e)
+        return response
+    }catch (error){
+        console.error("Error en save:", error);
+
+        if (error.response) {
+            // El servidor respondió con un error
+            console.log("Código de estado:", error.response.status);
+            console.log("Datos del error:", error.response.data);
+            console.log("Mensaje:", error.response.data.message);
+            console.log("Detalles de validación:", error.response.data.data);
+        } else if (error.request) {
+            console.log("No hubo respuesta del servidor");
+        } else {
+            console.log("Error en la configuración:", error.message);
+        }
+
+        //Re-lanzar el error con información adicional
+        throw error;
     }
     return undefined
 }
@@ -50,11 +66,26 @@ export const save =  async ({username, password, email})=>{
  */
 export const update = async ({id, username, email})=>{
     try{
-        return  await axios.put(BASE_URL+"/"+id,{username, email})
+        const response =   await axios.put(BASE_URL+"/"+id,{username, email})
+        return response
 
     }
-    catch(e){
-        console.error(e)
+    catch(error){
+        console.error("Error en update:", error);
+
+        if (error.response) {
+            // El servidor respondió con un error
+            console.log("Código de estado:", error.response.status);
+            console.log("Datos del error:", error.response.data);
+            console.log("Mensaje:", error.response.data.message);
+            console.log("Detalles de validación:", error.response.data.data);
+        } else if (error.request) {
+            console.log("No hubo respuesta del servidor");
+        } else {
+            console.log("Error en la configuración:", error.message);
+        }
+
+        throw error;
     }
     return undefined
 }

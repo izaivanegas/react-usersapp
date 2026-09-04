@@ -5,7 +5,7 @@ import {UserContext} from "../context/UserContext.jsx";
 export const UserForm = ({userSelected, handleCloseForm}) => {
 
 
-    const {handlerAddUser, initialUserForm } = useContext(UserContext);
+    const {handlerAddUser, initialUserForm, errors } = useContext(UserContext);
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
@@ -52,7 +52,7 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
             return
         }
         handlerAddUser(userForm);
-        setUserForm(initialUserForm);
+
     }
 
     const onCloseForm = () => {
@@ -67,12 +67,20 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
             <form onSubmit={onSubmit}>
                 <input type="text" className="form-control my-3" placeholder="username" name="username"
                        onChange={onInputChange} value={username}/>
+                <p className="text-danger">
+                    {errors?.username}
+                </p>
 
-                {id > 0 || <input type="password" className="form-control my-3" placeholder="password" name="password"
-                                  onChange={onInputChange} value={password}/>  }
+                {id > 0 ||
+                    <input type="password" className="form-control my-3" placeholder="password" name="password"
+                                  onChange={onInputChange} value={password}/>
+                }
+                <p className="text-danger">{errors?.password} </p>
 
                 <input type="email" className="form-control my-3" placeholder="email" name="email"
                        onChange={onInputChange} value={email}/>
+                <p className="text-danger">{errors?.email} </p>
+
 
                 <input type="hidden"
                        name="id"
