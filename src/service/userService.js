@@ -2,6 +2,15 @@
 
     const BASE_URL = "http://localhost:8080";
 
+    const config = ()=> {
+        return {
+            headers:{
+                "Authorization": sessionStorage.getItem('token'),
+                "Content-Type": "application/json",
+            }
+        }
+    }
+
     export const findAll = async ()=>{
 
         try{
@@ -32,7 +41,7 @@
         console.log("save.......")
         try{
            const response =   await axios.post(BASE_URL+"/adduser",
-                {username, password, email})
+                {username, password, email}, config())
 
             return response
         }catch (error){
@@ -66,7 +75,7 @@
      */
     export const update = async ({id, username, email})=>{
         try{
-            const response =   await axios.put(BASE_URL+"/"+id,{username, email})
+            const response =   await axios.put(BASE_URL+"/"+id,{username, email},config())
             return response
 
         }
@@ -96,7 +105,7 @@
      */
     export const remove = async (id)=>{
         try{
-             await axios.delete(BASE_URL+"/"+id)
+             await axios.delete(BASE_URL+"/"+id, config())
 
         }
         catch(e){

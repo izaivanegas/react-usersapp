@@ -4,6 +4,7 @@ import {UserModalForm} from "../components/UserModalForm.jsx";
 import {UsersList} from "../components/UsersList.jsx";
 import {useContext, useEffect} from "react";
 import {UserContext} from "../context/UserContext.jsx";
+import {LoginContext} from "../auth/context/LoginContext.jsx";
 
 export const UsersPage = ()=>{
 
@@ -16,6 +17,9 @@ export const UsersPage = ()=>{
         handleOpenForm,
         getUsers
     } = useContext(UserContext)
+
+
+    const {login} = useContext(LoginContext);
 
     //para ejecutar la funcion getUsers
     useEffect(()=>{
@@ -32,7 +36,7 @@ export const UsersPage = ()=>{
             <div className="container my-4">
                 <div className="row">
                     <div className="col">
-                        {visibleForm ||
+                        {visibleForm || !(login.isAdmin) ||
                             <button
                                 className="btn btn-primary my-3"
                                 type="button"

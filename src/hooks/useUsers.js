@@ -1,9 +1,10 @@
-import {use, useReducer, useState} from "react";
+import {use, useContext, useReducer, useState} from "react";
 import {usersReducer} from "../reducers/usersReducer.js";
 import {addUser, deleteUser, updateUser, loadingUsers} from '../reducers/usersActions';
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {findAll, remove, save, update} from "../service/userService.js";
+import {LoginContext} from "../auth/context/LoginContext.jsx";
 
 const initialUsers = [{
     id: new Date().getTime(),
@@ -32,6 +33,8 @@ export const useUsers = () => {
 
     const navigate = useNavigate();
 
+    const {login} = useContext(LoginContext);
+
     const [users, dispatch] = useReducer(usersReducer, initialUsers)
     const [userSelected, setUserSelected] = useState(initialUserForm)
     const [visibleForm, setVisibleForm] = useState(false)
@@ -53,6 +56,9 @@ export const useUsers = () => {
     }
 
     const handlerAddUser = async (user) => {
+
+        if(!login.isAdmin) return
+
         let respose;
         setErrors(errorsInitialUsers)
         try {
@@ -97,7 +103,7 @@ export const useUsers = () => {
             }
 
         } catch (error) {
-            console.log("Error caemos aqui")
+            console.log("Error caemos aqui:"+error.response.status)
             //Error
             if (error.response && error.response.status ==400 && error.response.data) {
                 console.log("Esto es un error en el  error response")
@@ -123,7 +129,20 @@ export const useUsers = () => {
                         'error'
                     );
                 }
-            } else {
+            } else if (error.response && error.response.status ==403 ){
+                console.log("Esto es un error de permisos")
+                Swal.fire(
+                    'Error de validación',
+                    'No tienes los permisos para realizar esta accion',
+                    'error'
+                );
+            } else if (error.response && error.response.status == 401 ){
+                // Para poder hacer el tema del token
+                han
+
+
+
+            }else {
                 Swal.fire(
                     'Error',
                     'No se pudo conectar con el servidor',
@@ -135,6 +154,7 @@ export const useUsers = () => {
     }
 
     const handlerRemoveUser = (id) => {
+        if(!login.isAdmin) return
         console.log("REMOVE USER REMOVE USER" + id);
         try{
             Swal.fire({

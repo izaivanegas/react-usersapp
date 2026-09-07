@@ -2,11 +2,13 @@
 import  {UserRow} from "./UserRow";
 import {useContext} from "react";
 import {UserContext} from "../context/UserContext.jsx";
+import {LoginContext} from "../auth/context/LoginContext.jsx";
 
 export const UsersList = () => {
 
 
     const {users} = useContext(UserContext)
+    const {login} = useContext(LoginContext);
 
     const handleUpdate = ()=> {
         alert('update')
@@ -25,9 +27,14 @@ export const UsersList = () => {
                     <th>#</th>
                     <th>username</th>
                     <th>email</th>
-                    <th>update</th>
-                    <th>update route</th>
-                    <th>remove</th>
+                    {!login.isAdmin ||
+                        <>
+                            <th>update</th>
+                            <th>update route</th>
+                            <th>remove</th>
+                        </>
+                    }
+
                 </tr>
                 </thead>
                 <tbody>

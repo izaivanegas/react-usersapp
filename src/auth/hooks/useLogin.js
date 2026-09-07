@@ -11,7 +11,8 @@ const initialLoginUser = JSON.parse(sessionStorage.getItem('login'))|| {
     user: {
         username: "",
         password: "",
-    }
+    },
+    isAdmin: false
 }
 
 export const useLogin = ()=>{
@@ -25,23 +26,50 @@ export const useLogin = ()=>{
      * @param username
      * @param password
      */
-    const handleLogin = ({username, password})=>{
+    const handleLogin = async ({username, password})=>{
         console.log("datos: "  + username +"pass:" +  password)
-        const isLogin = loginUser({username, password})
-        if(isLogin){
-            const user = {username:'admin', password:'admin'};
+
+        try{
+
+            const response =  await loginUser({username, password})
+
+            const  token = response.data.token;
+
+            const claims = JSON.parse(window.atob(token.split(".")[1]));
+            console.log(claims);
+
+
+
+            //const user = {username:'admin', password:'admin'};
+            const user = {username: response.data.username, password: '***********'}
+
             dispatch({
                 type: loginAction,
-                payload: user
+                payload: {user, isAdmin: claims.isAdmin}
             })
             console.log(login)
             sessionStorage.setItem('login', JSON.stringify({
                 isAuth: true,
-                user:user
+                user:user,
+                isAdmin: claims.isAdmin,
             }));
+
+            sessionStorage.setItem('token',  "Bearer ".concat(response.data.token));
+
+            const miToken = sessionStorage.getItem('token')
+
+
             navigate('/users')
-        }else{
-            Swal.fire("warning", "Datos incorrectos", "error")
+        }catch (error){
+            if(error.response?.status === 401){
+                Swal.fire("warning", "Datos incorrectos", "error")
+            }else if (error.response?.status === 403){
+                Swal.fire("warning", "No tiene persmisos para el recurso solicitado", "error")
+            }else {
+                throw error;
+            }
+
+
         }
     }
 
@@ -51,6 +79,8 @@ export const useLogin = ()=>{
             type: logoutAction,
         })
         sessionStorage.removeItem('login')
+        sessionStorage.removeItem('token')
+        sessionStorage.clear()
 
     }
 
