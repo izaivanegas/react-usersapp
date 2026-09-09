@@ -9,7 +9,7 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
-    const {id, username, password, email} = userForm;
+    const {id, username, password, email, admin} = userForm;
 
 
     useEffect(() => {
@@ -86,6 +86,21 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
                        name="id"
                        value={id}
                        className="form-control my-3" />
+
+
+                <div className="form-check my-3">
+                    <input
+                        type="checkbox"
+                        className="form-check-input"
+                        id="adminCheck"
+                        name="admin"
+                        checked={admin || false}   // si admin es null/undefined, false
+                        onChange={onInputChange}
+                    />
+                    <label className="form-check-label" htmlFor="adminCheck">
+                        ¿Es administrador?
+                    </label>
+                </div>
 
                 <button type="submit" className="btn btn-primary">
 

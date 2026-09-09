@@ -11,6 +11,7 @@ const initialUsers = [{
     username: 'Izai Vanegas',
     password: '12345',
     email: 'izai.vanegas@gmail.com'
+    ,admin: false
 },
 ]
 
@@ -20,12 +21,14 @@ const initialUserForm = {
     username: '',
     password: '',
     email: '',
+    admin:false,
 }
 
 const errorsInitialUsers = {
     username: '',
     password: '',
     email: '',
+    admin: false,
 }
 
 

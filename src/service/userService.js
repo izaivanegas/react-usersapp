@@ -1,6 +1,8 @@
     import axios from "axios";
 
+
     const BASE_URL = "http://localhost:8080";
+
 
     const config = ()=> {
         return {
@@ -41,7 +43,7 @@
         console.log("save.......")
         try{
            const response =   await axios.post(BASE_URL+"/adduser",
-                {username, password, email}, config())
+                {username, password, email, admin:false}, config())
 
             return response
         }catch (error){
@@ -75,19 +77,13 @@
      */
     export const update = async ({id, username, email})=>{
         try{
-            const response =   await axios.put(BASE_URL+"/"+id,{username, email},config())
+            const response =   await axios.put(BASE_URL+"/"+id,{username, email, admin:true},config())
             return response
 
         }
         catch(error){
-            console.error("Error en update:", error);
-
             if (error.response) {
                 // El servidor respondió con un error
-                console.log("Código de estado:", error.response.status);
-                console.log("Datos del error:", error.response.data);
-                console.log("Mensaje:", error.response.data.message);
-                console.log("Detalles de validación:", error.response.data.data);
             } else if (error.request) {
                 console.log("No hubo respuesta del servidor");
             } else {
