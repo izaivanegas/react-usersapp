@@ -1,12 +1,14 @@
 import {UserForm} from "../components/UserForm.jsx";
-import {useContext, useEffect, useState} from "react";
+//import {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {UserContext} from "../context/UserContext.jsx";
+import {useUsers} from "../hooks/useUsers.js";
 
 
 export const RegisterPage = () => {
 
-    const {users=[],  initialUserForm} = useContext(UserContext)
+    //const {users=[],  initialUserForm} = useContext(UserContext)
+    const {users=[],  initialUserForm} = useUsers()
 
     const [userSelected, setUserSelected] = useState(initialUserForm)
     const {id} = useParams() //esto proviene de router-dom

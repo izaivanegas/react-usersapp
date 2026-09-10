@@ -1,10 +1,28 @@
 import {use, useContext, useReducer, useState} from "react";
 import {usersReducer} from "../reducers/usersReducer.js";
-import {addUser, deleteUser, updateUser, loadingUsers} from '../reducers/usersActions';
+
+//import {addUser, deleteUser, updateUser, loadingUsers,} from '../reducers/usersActions';
+
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {findAll, remove, save, update} from "../service/userService.js";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
+import {useDispatch, useSelector} from "react-redux";
+
+import {
+    initialUserForm,
+    errorsInitialUsers,
+    addUser,
+    removeUser,
+    updateUser,
+    loadingUsers,
+    onUserSelectedForm,
+    onHandleOpenForm,
+    onHandleCloseForm,
+    loadingErrors
+} from "../store/slices/users/usersSlice.js"
+import {useLogin} from "../auth/hooks/useLogin.js";
+
 
 const initialUsers = [{
     id: new Date().getTime(),
@@ -16,32 +34,36 @@ const initialUsers = [{
 ]
 
 
-const initialUserForm = {
-    id: 0,
-    username: '',
-    password: '',
-    email: '',
-    admin:false,
-}
 
-const errorsInitialUsers = {
+/*const errorsInitialUsers = {
     username: '',
     password: '',
     email: '',
     admin: false,
-}
+}*/
 
 
 export const useUsers = () => {
 
     const navigate = useNavigate();
 
-    const {login} = useContext(LoginContext);
+    //const {login} = useContext(LoginContext);
+    const {login} = useLogin()
 
-    const [users, dispatch] = useReducer(usersReducer, initialUsers)
-    const [userSelected, setUserSelected] = useState(initialUserForm)
-    const [visibleForm, setVisibleForm] = useState(false)
-    const [errors, setErrors] = useState(errorsInitialUsers)
+
+    //const [users, dispatch] = useReducer(usersReducer, initialUsers)
+
+    //ahora con redux
+    const {users,userSelected,visibleForm,errors} = useSelector(state=>state.users)
+
+    const{dispatch} = useDispatch()
+
+    //vamos a llevarlo a redux
+    //const [userSelected, setUserSelected] = useState(initialUserForm)
+    //const [visibleForm, setVisibleForm] = useState(false)
+
+
+    //const [errors, setErrors] = useState(errorsInitialUsers)
 
     /**
      * Recuperamos los usuarios del backend usando axios
@@ -50,13 +72,10 @@ export const useUsers = () => {
     const getUsers = async () => {
         try{
             const result = await findAll()
-            //console.log(result)
-            dispatch(
-                {
-                    type: loadingUsers,
-                    payload: result.data
-                }
-            )
+
+            //redux
+            dispatch(loadingUsers(result.data))
+
         }catch (error){
             if(error.response?.status == 401){
                 console.log(error.response?.statusText)
@@ -70,22 +89,17 @@ export const useUsers = () => {
         if(!login.isAdmin) return
 
         let respose;
-        setErrors(errorsInitialUsers)
+
+        dispatch(loadingUsers(errorsInitialUsers))
+        //setErrors(errorsInitialUsers)
+
+
         try {
 
             if (user !== null && user.id !== undefined) {
                 if (user.id === 0) {
-                    console.log("handlerAddUser: se agrega un usuario....")
-                    console.log("-->" + user.admin )
-
                     respose = await save(user);
-                    console.log("Respuesta: " + JSON.stringify(respose));
-
-                    dispatch({
-                        type: addUser,
-                        payload: respose.data.data
-                    });
-
+                    dispatch(addUser(respose.data.data))
                     Swal.fire(
                         'Agregar usuario',
                         'Usuario creado con exito',
@@ -95,13 +109,8 @@ export const useUsers = () => {
                     handleCloseForm()
                 } else {
                     //actualizacion por que es dif de cero
-                    console.log("se realizara la actualizacion del usuaio id: " + user.id)
-                    console.log("-->" + user.admin )
                     respose = await update(user)
-                    dispatch({
-                        type: updateUser,
-                        payload: respose.data.data
-                    })
+                    dispatch(updateUser(respose.data.data))
                     Swal.fire(
                         'Actualizacion de informacion',
                         'Usuario actualizado con exito',
@@ -122,7 +131,13 @@ export const useUsers = () => {
                 const errorData = error.response.data;
 
                 // se agregan los errores
-                setErrors(errorData.data)
+
+                dispatch(loadingErrors(errorData.data))
+                //setErrors(errorData.data)
+
+
+
+
                 console.log("Estoy aqui::::::.->" + JSON.stringify(errorData.data))
 
                 if (errorData.data && typeof errorData.data === 'object') {
@@ -180,10 +195,7 @@ export const useUsers = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 remove(id)
-                dispatch({
-                    type: deleteUser,
-                    payload: id
-                })
+                dispatch(deleteUser(id))
                 Swal.fire({
                     title: "Eliminar cuenta!",
                     text: "Usuario eliminado con exito.",
@@ -230,26 +242,36 @@ export const useUsers = () => {
 
 
     }
-
+    //se paso al redux con el nombre onUserSelectedForm
     const handleEditUser = (user) => {
         console.log("Edit USER" + user.id)
         console.log("username: " + user.username)
         console.log("username: " + user.admin)
-        setVisibleForm(true)
+        /*setVisibleForm(true)
         setUserSelected({
             ...user,
 
-        })
-        setErrors(errorsInitialUsers)
+        })*/
+        dispatch(onUserSelectedForm({...user}))
+
+        //setErrors(errorsInitialUsers)
+        dispatch(loadingErrors(errorsInitialUsers))
     }
     const handleOpenForm = () => {
-        setVisibleForm(true)
-        setErrors(errorsInitialUsers)
+        //setVisibleForm(true)
+        dispatch(onHandleOpenForm())
+
+        //setErrors(errorsInitialUsers)
+        dispatch(loadingErrors(errorsInitialUsers))
     }
     const handleCloseForm = () => {
-        setVisibleForm(false)
-        setUserSelected(initialUserForm)
-        setErrors(errorsInitialUsers)
+        //setVisibleForm(false)
+        //setUserSelected(initialUserForm)
+
+        dispatch(onHandleCloseForm())
+
+         //setErrors({})
+        dispatch(loadingErrors({}))
     }
 
     return {

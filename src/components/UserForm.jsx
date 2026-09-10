@@ -1,14 +1,17 @@
 import {useContext, useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import {UserContext} from "../context/UserContext.jsx";
+import {useUsers} from "../hooks/useUsers.js";
 
 export const UserForm = ({userSelected, handleCloseForm}) => {
 
 
-    const {handlerAddUser, initialUserForm, errors } = useContext(UserContext);
+    //const {handlerAddUser, initialUserForm, errors } = useContext(UserContext);
+    const {handlerAddUser, initialUserForm, errors } = useUsers();
 
+
+    //estos estados son solo de esta pagina
     const [userForm, setUserForm] = useState(initialUserForm);
-
     const {id, username, password, email, admin} = userForm;
 
 

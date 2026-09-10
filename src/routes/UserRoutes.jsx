@@ -5,10 +5,12 @@ import {RegisterPage} from "../pages/RegisterPage.jsx";
 
 import {useContext} from "react";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
+import {useLogin} from "../auth/hooks/useLogin.js";
 
 
 export const UserRoutes = () => {
-    const {login} = useContext(LoginContext)
+    //const {login} = useContext(LoginContext)
+    const {login} = useLogin()
 
     return (<>
 

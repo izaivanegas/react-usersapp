@@ -4,20 +4,29 @@ import {loginAction, logoutAction} from "../reducers/LoginActions.js";
 import Swal from "sweetalert2";
 import {loginUser} from "../../service/authService.js";
 import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {onLogin, onLogout} from "../../store/slices/login/loginSlice.js";
 
-
-const initialLoginUser = JSON.parse(sessionStorage.getItem('login'))|| {
+/*
+    const initialLoginUser = JSON.parse(sessionStorage.getItem('login'))|| {
     isAuth: false,
     user: {
         username: "",
         password: "",
     },
     isAdmin: false
-}
+    }
+*/
 
 export const useLogin = ()=>{
 
-    const [login, dispatch] = useReducer(LoginReducer, initialLoginUser)
+    //const [login, dispatch] = useReducer(LoginReducer, initialLoginUser)
+
+    const dispatch = useDispatch()
+
+    const {user, isAdmin, isAuth } = useSelector(state=>state.login)
+
+
 
     const navigate = useNavigate();
 
@@ -43,10 +52,10 @@ export const useLogin = ()=>{
             //const user = {username:'admin', password:'admin'};
             const user = {username: response.data.username, password: '***********'}
 
-            dispatch({
-                type: loginAction,
-                payload: {user, isAdmin: claims.isAdmin}
-            })
+            dispatch(
+                onLogin({user, isAdmin: claims.isAdmin})
+                //{type: loginAction, payload: {user, isAdmin: claims.isAdmin}}
+            )
             console.log(login)
             sessionStorage.setItem('login', JSON.stringify({
                 isAuth: true,
@@ -75,9 +84,10 @@ export const useLogin = ()=>{
 
     const handleLogout = ()=>{
 
-        dispatch({
-            type: logoutAction,
-        })
+        dispatch(
+            onLogout()
+            //{type: logoutAction,}
+    )
         sessionStorage.removeItem('login')
         sessionStorage.removeItem('token')
         sessionStorage.clear()
@@ -86,7 +96,12 @@ export const useLogin = ()=>{
 
 
     return{
-        login,
+        login:{
+
+            user,
+            isAdmin,
+            isAuth
+        },
         handleLogin,
         handleLogout,
     }

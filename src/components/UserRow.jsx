@@ -2,11 +2,18 @@ import {NavLink} from "react-router-dom";
 import {useContext} from "react";
 import {UserContext} from "../context/UserContext.jsx";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
+import {useUsers} from "../hooks/useUsers.js";
+import {useLogin} from "../auth/hooks/useLogin.js";
+
 
 export const UserRow = ({id, username, email,password, admin}) =>{
 
-    const {handlerRemoveUser, handleEditUser} = useContext(UserContext)
-    const {login} = useContext(LoginContext);
+    //const {handlerRemoveUser, handleEditUser} = useContext(UserContext)
+    const {handlerRemoveUser, handleEditUser} = useUsers()
+
+
+    //const {login} = useContext(LoginContext);
+    const {login} = useLogin()
     return (
         <>
             <tr>

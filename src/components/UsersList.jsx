@@ -1,14 +1,20 @@
 
 import  {UserRow} from "./UserRow";
 import {useContext} from "react";
-import {UserContext} from "../context/UserContext.jsx";
+//import {UserContext} from "../context/UserContext.jsx";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
+import {useUsers} from "../hooks/useUsers.js";
+import {useLogin} from "../auth/hooks/useLogin.js";
 
 export const UsersList = () => {
 
 
-    const {users} = useContext(UserContext)
-    const {login} = useContext(LoginContext);
+    //const {users} = useContext(UserContext)
+    const {users} = useUsers()
+
+
+    //const {login} = useContext(LoginContext);
+    const {login} = useLogin();
 
     const handleUpdate = ()=> {
         alert('update')

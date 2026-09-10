@@ -1,10 +1,10 @@
 import {useUsers} from "../hooks/useUsers.js";
 import {UserModalForm} from "../components/UserModalForm.jsx";
-
 import {UsersList} from "../components/UsersList.jsx";
 import {useContext, useEffect} from "react";
-import {UserContext} from "../context/UserContext.jsx";
+//import {UserContext} from "../context/UserContext.jsx";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
+import {useLogin} from "../auth/hooks/useLogin.js";
 
 export const UsersPage = ()=>{
 
@@ -16,10 +16,11 @@ export const UsersPage = ()=>{
         handleEditUser,
         handleOpenForm,
         getUsers
-    } = useContext(UserContext)
+    } = useUsers()
 
 
-    const {login} = useContext(LoginContext);
+    //const {login} = useContext(LoginContext);
+    const {login} = useLogin();
 
     //para ejecutar la funcion getUsers
     useEffect(()=>{
