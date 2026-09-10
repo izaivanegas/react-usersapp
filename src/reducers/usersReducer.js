@@ -27,6 +27,7 @@ export const usersReducer = (state = [], action) => {
                 return usuario
             })
         case loadingUsers:
+            console.log(action.payload)
             return action.payload
         default:
             return state;

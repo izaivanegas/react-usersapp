@@ -20,7 +20,10 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
     }, [userSelected])
 
     const onInputChange = ({target}) => {
-        const {name, value} = target;
+        //const {name, value} = target;
+        const {name, value, type, checked} = target;
+        // Si es checkbox, usar checked, si no, usar value
+        const val = type === 'checkbox' ? checked : value;
         setUserForm(
             {
                 ...userForm,
@@ -94,8 +97,13 @@ export const UserForm = ({userSelected, handleCloseForm}) => {
                         className="form-check-input"
                         id="adminCheck"
                         name="admin"
-                        checked={admin || false}   // si admin es null/undefined, false
-                        onChange={onInputChange}
+                        checked={admin || false}
+                        onChange={(e) => {
+                            setUserForm({
+                                ...userForm,
+                                admin: e.target.checked  // ← usar checked en lugar de value
+                            });
+                        }}
                     />
                     <label className="form-check-label" htmlFor="adminCheck">
                         ¿Es administrador?

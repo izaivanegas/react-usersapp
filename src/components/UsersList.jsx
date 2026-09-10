@@ -27,6 +27,7 @@ export const UsersList = () => {
                     <th>#</th>
                     <th>username</th>
                     <th>email</th>
+                    <th>Admin</th>
                     {!login.isAdmin ||
                         <>
                             <th>update</th>
@@ -39,9 +40,9 @@ export const UsersList = () => {
                 </thead>
                 <tbody>
                 {
-                    users.map(({id, username, email, password}) => (
+                    users.map(({id, username, email, password, admin}) => (
                         <UserRow  key={id} id={id} username={username} email={email}
-                                  password={password}
+                                  password={password} admin={admin}
 
                         />
                     ))

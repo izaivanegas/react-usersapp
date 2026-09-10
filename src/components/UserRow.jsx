@@ -3,7 +3,7 @@ import {useContext} from "react";
 import {UserContext} from "../context/UserContext.jsx";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
 
-export const UserRow = ({id, username, email,password}) =>{
+export const UserRow = ({id, username, email,password, admin}) =>{
 
     const {handlerRemoveUser, handleEditUser} = useContext(UserContext)
     const {login} = useContext(LoginContext);
@@ -13,7 +13,7 @@ export const UserRow = ({id, username, email,password}) =>{
                 <td>{id}</td>
                 <td>{username}</td>
                 <td>{email}</td>
-
+                <td>{admin?'Si':'No'}</td>
                 {!login.isAdmin ||
                     <>
                 <td>
@@ -25,6 +25,8 @@ export const UserRow = ({id, username, email,password}) =>{
                                     username: username,
                                     email: email,
                                     password: password,
+                                    admin:admin
+
                                 }
                             )}
                     >Update</button>

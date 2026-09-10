@@ -39,11 +39,12 @@
      * @param email
      * @returns {Promise<void>}
      */
-    export const save =  async ({username, password, email})=>{
+    export const save =  async ({username, password, email, admin})=>{
         console.log("save.......")
+        console.log("admin--<:"+admin)
         try{
            const response =   await axios.post(BASE_URL+"/adduser",
-                {username, password, email, admin:false}, config())
+                {username, password, email, admin}, config())
 
             return response
         }catch (error){
@@ -75,9 +76,9 @@
      * @param email
      * @returns {Promise<undefined|void>}
      */
-    export const update = async ({id, username, email})=>{
+    export const update = async ({id, username, email, admin})=>{
         try{
-            const response =   await axios.put(BASE_URL+"/"+id,{username, email, admin:true},config())
+            const response =   await axios.put(BASE_URL+"/"+id,{username, email, admin},config())
             return response
 
         }

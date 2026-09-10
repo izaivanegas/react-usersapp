@@ -10,8 +10,8 @@ const initialUsers = [{
     id: new Date().getTime(),
     username: 'Izai Vanegas',
     password: '12345',
-    email: 'izai.vanegas@gmail.com'
-    ,admin: false
+    email: 'izai.vanegas@gmail.com',
+    admin: false
 },
 ]
 
@@ -69,6 +69,7 @@ export const useUsers = () => {
             if (user !== null && user.id !== undefined) {
                 if (user.id === 0) {
                     console.log("handlerAddUser: se agrega un usuario....")
+                    console.log("-->" + user.admin )
 
                     respose = await save(user);
                     console.log("Respuesta: " + JSON.stringify(respose));
@@ -88,6 +89,7 @@ export const useUsers = () => {
                 } else {
                     //actualizacion por que es dif de cero
                     console.log("se realizara la actualizacion del usuaio id: " + user.id)
+                    console.log("-->" + user.admin )
                     respose = await update(user)
                     dispatch({
                         type: updateUser,
@@ -225,6 +227,7 @@ export const useUsers = () => {
     const handleEditUser = (user) => {
         console.log("Edit USER" + user.id)
         console.log("username: " + user.username)
+        console.log("username: " + user.admin)
         setVisibleForm(true)
         setUserSelected({
             ...user,

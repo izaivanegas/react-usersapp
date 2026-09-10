@@ -2,7 +2,6 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {UsersPage} from "../pages/UsersPage.jsx";
 import {Navbar} from "../layout/Navbar.jsx";
 import {RegisterPage} from "../pages/RegisterPage.jsx";
-import {useUsers} from "../hooks/useUsers.js";
 import {UserProvider} from "../context/UserProvider.jsx";
 import {useContext} from "react";
 import {LoginContext} from "../auth/context/LoginContext.jsx";
