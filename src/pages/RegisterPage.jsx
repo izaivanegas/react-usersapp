@@ -16,7 +16,7 @@ export const RegisterPage = () => {
 
     useEffect(()=>{
         if(id){
-            const user = users.find(user => user.id == id)
+            const user = users.find(user => user.id === id)
             if (user){
                 setUserSelected(user)
             }else{
