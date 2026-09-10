@@ -48,14 +48,21 @@ export const useUsers = () => {
      * @returns {Promise<void>}
      */
     const getUsers = async () => {
-        const result = await findAll()
-        //console.log(result)
-        dispatch(
-            {
-                type: loadingUsers,
-                payload: result.data
+        try{
+            const result = await findAll()
+            //console.log(result)
+            dispatch(
+                {
+                    type: loadingUsers,
+                    payload: result.data
+                }
+            )
+        }catch (error){
+            if(error.response?.status == 401){
+                console.log(error.response?.statusText)
             }
-        )
+        }
+
     }
 
     const handlerAddUser = async (user) => {

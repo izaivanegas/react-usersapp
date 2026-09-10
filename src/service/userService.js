@@ -1,22 +1,23 @@
     import axios from "axios";
+    import usersApi from "../apis/usersApi.js";
 
 
-    const BASE_URL = "http://localhost:8080";
+    const BASE_URL = '';
 
 
-    const config = ()=> {
+    /*const config = ()=> {
         return {
             headers:{
                 "Authorization": sessionStorage.getItem('token'),
                 "Content-Type": "application/json",
             }
         }
-    }
+    }*/
 
     export const findAll = async ()=>{
 
         try{
-            const response = await axios.get(BASE_URL+"/users")
+            const response = await usersApi.get("/users")
             // response.data = {
             //   success: true,
             //   message: "Usuarios obtenidos exitosamente",
@@ -43,8 +44,8 @@
         console.log("save.......")
         console.log("admin--<:"+admin)
         try{
-           const response =   await axios.post(BASE_URL+"/adduser",
-                {username, password, email, admin}, config())
+           const response =   await usersApi.post("/adduser",
+                {username, password, email, admin} )
 
             return response
         }catch (error){
@@ -78,7 +79,7 @@
      */
     export const update = async ({id, username, email, admin})=>{
         try{
-            const response =   await axios.put(BASE_URL+"/"+id,{username, email, admin},config())
+            const response =   await usersApi.put("/"+id,{username, email, admin})
             return response
 
         }
@@ -102,7 +103,7 @@
      */
     export const remove = async (id)=>{
         try{
-             await axios.delete(BASE_URL+"/"+id, config())
+             await usersApi.delete("/"+id)
 
         }
         catch(e){
