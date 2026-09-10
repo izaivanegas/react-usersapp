@@ -1,8 +1,9 @@
 import {UserForm} from "../components/UserForm.jsx";
-//import {useContext, useEffect, useState} from "react";
+import { useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {UserContext} from "../context/UserContext.jsx";
+
 import {useUsers} from "../hooks/useUsers.js";
+
 
 
 export const RegisterPage = () => {

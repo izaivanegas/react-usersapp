@@ -1,12 +1,8 @@
 import {use, useContext, useReducer, useState} from "react";
-import {usersReducer} from "../reducers/usersReducer.js";
-
-//import {addUser, deleteUser, updateUser, loadingUsers,} from '../reducers/usersActions';
-
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {findAll, remove, save, update} from "../service/userService.js";
-import {LoginContext} from "../auth/context/LoginContext.jsx";
+
 import {useDispatch, useSelector} from "react-redux";
 
 import {
@@ -56,7 +52,7 @@ export const useUsers = () => {
     //ahora con redux
     const {users,userSelected,visibleForm,errors} = useSelector(state=>state.users)
 
-    const{dispatch} = useDispatch()
+    const dispatch = useDispatch()
 
     //vamos a llevarlo a redux
     //const [userSelected, setUserSelected] = useState(initialUserForm)
@@ -90,7 +86,8 @@ export const useUsers = () => {
 
         let respose;
 
-        dispatch(loadingUsers(errorsInitialUsers))
+        dispatch(loadingErrors(errorsInitialUsers))
+
         //setErrors(errorsInitialUsers)
 
 
@@ -195,7 +192,7 @@ export const useUsers = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 remove(id)
-                dispatch(deleteUser(id))
+                dispatch(removeUser(id))
                 Swal.fire({
                     title: "Eliminar cuenta!",
                     text: "Usuario eliminado con exito.",

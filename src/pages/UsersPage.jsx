@@ -3,7 +3,7 @@ import {UserModalForm} from "../components/UserModalForm.jsx";
 import {UsersList} from "../components/UsersList.jsx";
 import {useContext, useEffect} from "react";
 //import {UserContext} from "../context/UserContext.jsx";
-import {LoginContext} from "../auth/context/LoginContext.jsx";
+
 import {useLogin} from "../auth/hooks/useLogin.js";
 
 export const UsersPage = ()=>{

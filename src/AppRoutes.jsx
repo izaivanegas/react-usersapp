@@ -2,7 +2,7 @@ import {LoginPage} from './auth/pages/LoginPage.jsx'
 import {Route, Routes, Navigate} from "react-router-dom";
 import {UserRoutes} from "./routes/UserRoutes.jsx";
 import {useContext} from "react";
-import {LoginContext} from "./auth/context/LoginContext.jsx";
+
 import {useLogin} from "./auth/hooks/useLogin.js";
 
 export const AppRoutes =()=>{

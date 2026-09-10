@@ -1,6 +1,6 @@
 import {useReducer} from "react";
-import {LoginReducer} from "../reducers/LoginReducer.js";
-import {loginAction, logoutAction} from "../reducers/LoginActions.js";
+
+
 import Swal from "sweetalert2";
 import {loginUser} from "../services/authService.js";
 import {useNavigate} from "react-router-dom";
@@ -56,7 +56,7 @@ export const useLogin = ()=>{
                 onLogin({user, isAdmin: claims.isAdmin})
                 //{type: loginAction, payload: {user, isAdmin: claims.isAdmin}}
             )
-            console.log(login)
+            //console.log(login)
             sessionStorage.setItem('login', JSON.stringify({
                 isAuth: true,
                 user:user,

@@ -4,13 +4,14 @@ import {Navbar} from "../layout/Navbar.jsx";
 import {RegisterPage} from "../pages/RegisterPage.jsx";
 
 import {useContext} from "react";
-import {LoginContext} from "../auth/context/LoginContext.jsx";
+
 import {useLogin} from "../auth/hooks/useLogin.js";
+import {useSelector} from "react-redux";
 
 
 export const UserRoutes = () => {
     //const {login} = useContext(LoginContext)
-    const {login} = useLogin()
+    const {isAdmin} = useSelector(state=>state.login)
 
     return (<>
 
@@ -20,7 +21,7 @@ export const UserRoutes = () => {
             <Routes>
                 <Route path="users" element={<UsersPage />}/>
                 {
-                    !login.isAdmin || <>
+                    !isAdmin || <>
                         <Route path="/users/register" element={<RegisterPage />}/>
                         <Route path="/users/edit/:id" element={<RegisterPage />}/>
                     </>

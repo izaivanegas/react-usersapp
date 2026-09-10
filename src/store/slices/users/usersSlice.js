@@ -39,7 +39,7 @@ export const usersSlice = createSlice({
         },
         updateUser:(state, action) =>{
             state.users = state.users.map(user=>{
-                if(user.id !== action.payload.id)
+                if(Number(user.id) === Number(action.payload.id))
                 {
                    return {
                        ...action.payload,
