@@ -2,7 +2,7 @@ import {useReducer} from "react";
 import {LoginReducer} from "../reducers/LoginReducer.js";
 import {loginAction, logoutAction} from "../reducers/LoginActions.js";
 import Swal from "sweetalert2";
-import {loginUser} from "../../service/authService.js";
+import {loginUser} from "../services/authService.js";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {onLogin, onLogout} from "../../store/slices/login/loginSlice.js";
