@@ -50,7 +50,7 @@ export const useUsers = () => {
     //const [users, dispatch] = useReducer(usersReducer, initialUsers)
 
     //ahora con redux
-    const {users,userSelected,visibleForm,errors} = useSelector(state=>state.users)
+    const {users,userSelected,visibleForm,errors,isLoading} = useSelector(state=>state.users)
 
     const dispatch = useDispatch()
 
@@ -277,6 +277,7 @@ export const useUsers = () => {
         initialUserForm,
         visibleForm,
         errors,
+        isLoading,
         handlerAddUser,
         handlerRemoveUser,
         handleEditUser,

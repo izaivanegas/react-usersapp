@@ -15,7 +15,8 @@ export const UsersPage = ()=>{
         handlerRemoveUser,
         handleEditUser,
         handleOpenForm,
-        getUsers
+        getUsers,
+        isLoading,
     } = useUsers()
 
 
@@ -28,11 +29,19 @@ export const UsersPage = ()=>{
     }, [])
 
 
+    if(isLoading){
+        return <div className="container my-4">
 
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+
+        </div>
+    }
     return (
         <>
             {!visibleForm ||
-                <UserModalForm />
+                <UserModalForm/>
             }
             <div className="container my-4">
                 <div className="row">
