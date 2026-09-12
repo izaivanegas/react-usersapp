@@ -17,7 +17,7 @@
     export const findAll = async ()=>{
 
         try{
-            const response = await usersApi.get("/users")
+            const response = await usersApi.get("")
             // response.data = {
             //   success: true,
             //   message: "Usuarios obtenidos exitosamente",
@@ -44,8 +44,7 @@
         console.log("save.......")
         console.log("admin--<:"+admin)
         try{
-           const response =   await usersApi.post("/adduser",
-                {username, password, email, admin} )
+           const response =   await usersApi.post("", {username, password, email, admin} )
 
             return response
         }catch (error){

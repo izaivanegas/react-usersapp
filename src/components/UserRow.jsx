@@ -39,7 +39,10 @@ export const UserRow = ({id, username, email,password, admin}) =>{
                     >Update</button>
                 </td>
                 <td>
-                    <NavLink to={'/users/edit/'+id} className="btn btn-secondary btn-sm" >Update route</NavLink>
+                    <NavLink to={'/users/edit/'+id} className="btn btn-secondary btn-sm"
+
+                             onClick={() => handleEditUser({id, username, email, password, admin})}
+                    >Update route</NavLink>
                 </td>
                 <td>
                     <button className="btn btn-warning"
